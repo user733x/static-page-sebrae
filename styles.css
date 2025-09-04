@@ -7,7 +7,7 @@
 body {
     font-family: 'Inter', sans-serif;
     overflow: hidden; /* Remove scroll completamente para totem */
-    background: #000;
+    background: #ff4227;
     height: 100vh;
     width: 100vw;
 }
@@ -38,7 +38,7 @@ body {
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     /* Placeholder enquanto carrega */
-    background-color: #1a1a1a;
+    background-color: #ff4227;
 }
 
 /* Placeholder para a imagem de background - removido para não sobrepor a imagem */
@@ -457,7 +457,7 @@ body {
     .countdown-container {
         position: absolute;
         bottom: 40vh;
-        right: 3vw;
+        right: 8vw;
         left: auto;
         top: auto;
         transform: none;
@@ -549,7 +549,7 @@ body {
     .countdown-container {
         position: absolute;
         bottom: 40vh;
-        right: 2vw;
+        right: 6vw;
         left: auto;
         top: auto;
         transform: none;
