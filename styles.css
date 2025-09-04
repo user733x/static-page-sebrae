@@ -453,10 +453,10 @@ body {
 
 /* Responsividade para Mobile */
 @media (max-width: 768px) {
-    /* Ajusta o contador para mobile - próximo ao rodapé, alinhado à direita */
+    /* Ajusta o contador para mobile - no meio da página, alinhado à direita */
     .countdown-container {
         position: absolute;
-        bottom: 15vh;
+        bottom: 45vh;
         right: 3vw;
         left: auto;
         top: auto;
@@ -527,7 +527,7 @@ body {
     /* Ajusta o contador para mobile pequeno - ainda menor */
     .countdown-container {
         position: absolute;
-        bottom: 12vh;
+        bottom: 40vh;
         right: 2vw;
         left: auto;
         top: auto;
