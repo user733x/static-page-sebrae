@@ -456,7 +456,7 @@ body {
     /* Ajusta o contador para mobile - no meio da página, alinhado à direita */
     .countdown-container {
         position: absolute;
-        bottom: 35vh;
+        bottom: 45vh;
         right: 3vw;
         left: auto;
         top: auto;
