@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feira do Empreendedor Sebrae & Siará Tech Summit STS/25</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Preload da imagem de background para carregamento prioritário -->
+    <link rel="preload" as="image" href="asset/images/background-temp.png">
+    
+    <!-- Fonte Nexa -->
+    <style>
+        @font-face {
+            font-family: 'Nexa';
+            src: url('asset/fonts/nexa-book.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Nexa';
+            src: url('asset/fonts/nexa-bold.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Nexa';
+            src: url('asset/fonts/nexa-black.otf') format('opentype');
+            font-weight: 900;
+            font-style: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="poster-container">
+        <!-- Background com gradiente laranja -->
+        <div class="background-gradient"></div>
+        
+        <!-- Efeito pulsante sobrepondo o background -->
+        <div class="pulse-overlay"></div>
+        
+        <!-- Efeitos de iluminação premium -->
+        <div class="lighting-effects" id="lighting-effects">
+            <div class="central-glow"></div>
+            <div class="edge-reflections"></div>
+            <div class="light-waves"></div>
+            <div class="glow-particles" id="glow-particles"></div>
+        </div>
+        
+        <!-- Contador regressivo centralizado -->
+        <div class="countdown-container">
+            <div class="countdown-center">
+                <h3 class="countdown-title">FALTAM APENAS:</h3>
+                <div class="countdown">
+                    <div class="time-block">
+                        <div class="number-box" id="days">01</div>
+                        <div class="label">DIAS</div>
+                    </div>
+                    <div class="separator">:</div>
+                    <div class="time-block">
+                        <div class="number-box" id="hours">16</div>
+                        <div class="label">HORAS</div>
+                    </div>
+                    <div class="separator">:</div>
+                    <div class="time-block">
+                        <div class="number-box" id="minutes">39</div>
+                        <div class="label">MINUTOS</div>
+                    </div>
+                    <div class="separator">:</div>
+                    <div class="time-block">
+                        <div class="number-box" id="seconds">51</div>
+                        <div class="label">SEGUNDOS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
