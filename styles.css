@@ -27,7 +27,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('asset/images/homem-image.png') no-repeat center center;
+    background: url('asset/images/background.png') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
     z-index: 1;
@@ -39,24 +39,7 @@ body {
     background-color: #1a1a1a;
 }
 
-/* Placeholder para a imagem de background */
-.background-gradient::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, #FF6B00, #FF8C00);
-    opacity: 0.8;
-    z-index: -1;
-    transition: opacity 0.5s ease;
-}
-
-/* Remove o placeholder quando a imagem carrega */
-.background-gradient.loaded::before {
-    opacity: 0;
-}
+/* Placeholder para a imagem de background - removido para não sobrepor a imagem */
 
 /* Efeito de reflexo iluminado sutil */
 .pulse-overlay {
