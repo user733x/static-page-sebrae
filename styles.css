@@ -28,7 +28,7 @@ body {
     right: 0;
     bottom: 0;
     background: url('asset/images/background.png') no-repeat center center;
-    background-size: 100% 100%;
+    background-size: cover;
     background-attachment: fixed;
     z-index: 1;
     /* Otimizações para carregamento mais rápido */
@@ -39,7 +39,24 @@ body {
     background-color: #1a1a1a;
 }
 
-/* Placeholder para a imagem de background - removido para não sobrepor a imagem */
+/* Placeholder para a imagem de background */
+.background-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #FF6B00, #FF8C00);
+    opacity: 0.8;
+    z-index: -1;
+    transition: opacity 0.5s ease;
+}
+
+/* Remove o placeholder quando a imagem carrega */
+.background-gradient.loaded::before {
+    opacity: 0;
+}
 
 /* Efeito de reflexo iluminado sutil */
 .pulse-overlay {
@@ -279,15 +296,54 @@ body {
 
 
 
-/* Container do contador centralizado */
-.countdown-container {
+.content-wrapper {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    padding: 3vh 0 3vh 3vw; /* Padding aumentado para visibilidade */
+    gap: 0; /* Sem gap */
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+/* Seção Esquerda - Otimizada para totem */
+.left-section {
+    flex: 1;
+    color: white;
+    max-width: 100vw;
+    animation: slideInLeft 1.2s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Logotipo no topo - separado */
+.top-logo {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    text-align: center;
-    animation: fadeInUp 1s ease-out 0.5s both;
+    top: 3vh; /* Próximo ao topo */
+    left: 1vw; /* Alinhado à esquerda */
+    z-index: 4;
+    animation: fadeInUp 1s ease-out 0.3s both;
+    text-align: left; /* Alinhado à esquerda */
+    width: auto;
+    max-width: 60vw; /* Largura limitada para não ocupar muito espaço */
 }
 
 @keyframes fadeInUp {
@@ -301,16 +357,265 @@ body {
     }
 }
 
+.logo-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 15vh; /* Aumentado para melhor visibilidade */
+    object-fit: contain;
+    object-position: left center; /* Alinhado à esquerda */
+    display: block;
+    margin: 0; /* Removido margin auto para alinhar à esquerda */
+}
+
+    .main-headline {
+        font-family: 'Nexa', sans-serif;
+        font-size: 1.5rem; /* Reduzido para caber no background */
+        font-weight: 500;
+        line-height: 1.2;
+        margin-top: -6vh; /* Subido 2x mais - sobreposição muito maior no logotipo */
+        margin-bottom: 1.5vh;
+        margin-left: 3vw; /* Alinhado com o QR code */
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        animation: fadeInUp 1s ease-out 0.6s both;
+        letter-spacing: 0.5px;
+        text-align: left;
+        align-self: flex-start;
+        max-width: 70vw; /* Aumentado para dar mais espaço horizontal */
+    }
+
+.event-description {
+    font-family: 'Nexa', sans-serif;
+    font-size: 1.1rem; /* Reduzido mais para quebrar corretamente */
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: -4vh; /* Descido/afastado mais do topo - sobreposição menor no título */
+    margin-bottom: 1vh; /* Reduzido para subir mais */
+    margin-left: 3vw; /* Alinhado com o QR code */
+    max-width: 45vw; /* Reduzido bastante para quebra mais frequente */
+    letter-spacing: 0.3px;
+    text-align: left;
+    align-self: flex-start;
+    /* Efeito de vidro premium para notificação */
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2vh 2.5vw;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        0 0 20px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+    /* Inicialmente oculto - só aparece com notificação */
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: all 0.8s ease;
+    pointer-events: none;
+}
+
+/* Efeito de brilho interno na notificação */
+.event-description::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 100%);
+    animation: notificationShine 3s ease-in-out infinite;
+    z-index: 1;
+}
+
+/* Texto da notificação */
+.event-description {
+    position: relative;
+    z-index: 2;
+}
+
+/* Indicador de notificação */
+.event-description::after {
+    content: '';
+    position: absolute;
+    top: 1vh;
+    right: 1.5vw;
+    width: 8px;
+    height: 8px;
+    background: #FFD700;
+    border-radius: 50%;
+    animation: notificationPulse 2s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+/* Efeito hover para a notificação */
+.event-description:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        0 0 30px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.event-description:hover::after {
+    transform: scale(1.5);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    transition: all 0.3s ease;
+}
+
+/* Animação de notificação com emoji */
+.notification-bell {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #FF6B00, #FF8C00);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    z-index: 1000;
+    cursor: pointer;
+    box-shadow: 
+        0 8px 25px rgba(255, 107, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    animation: bellShake 0.5s ease-in-out;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+}
+
+.notification-bell.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.notification-bell:hover {
+    transform: scale(1.1);
+    box-shadow: 
+        0 12px 35px rgba(255, 107, 0, 0.6),
+        inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Estado visível da notificação */
+.event-description.show {
+    opacity: 0.95;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Animação de abertura do texto */
+@keyframes textReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(-5px) scale(1.02);
+    }
+    100% {
+        opacity: 0.95;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.event-info {
+    margin-top: -1vh; /* Subido 3x mais - sobreposição no contador */
+    margin-bottom: 25vh; /* Afastado mais do rodapé */
+    margin-left: 3vw; /* Alinhado com o QR code */
+    animation: fadeInUp 1s ease-out 1.2s both;
+    align-self: flex-start;
+}
+
+.event-date {
+    margin-bottom: 1vh;
+    /* Removido efeito pulsante */
+}
+
+.date-numbers {
+    font-family: 'Nexa', sans-serif;
+    font-size: 2.2rem; /* Reduzido para layout mais equilibrado */
+    font-weight: 900;
+    color: #FFD700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 2px;
+    line-height: 0.9;
+    display: block;
+}
+
+.date-month {
+    font-family: 'Nexa', sans-serif;
+    font-size: 1.4rem; /* Reduzido para layout mais equilibrado */
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
+    line-height: 0.9;
+    display: block;
+    margin-top: -0.5vh;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.event-location, .event-time {
+    font-family: 'Nexa', sans-serif;
+    font-size: 0.9rem; /* Reduzido para cards menores */
+    font-weight: 600;
+    margin-bottom: 0.8vh;
+    color: white;
+    letter-spacing: 0.5px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.6vh 1.2vw; /* Reduzido para cards menores */
+    border-radius: 8px;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    display: block;
+    max-width: fit-content;
+    width: fit-content; /* Ajusta ao conteúdo */
+    text-align: left; /* Alinhado à esquerda */
+}
+
+/* Contador Regressivo à Esquerda */
+.countdown-left {
+    position: static;
+    z-index: 10;
+    text-align: left;
+    animation: fadeInUp 1s ease-out 1.5s both;
+    margin-top: -8vh; /* Subido 4x mais - sobreposição extrema no texto */
+    margin-bottom: -5vh; /* Descido bem mais - sobreposição no rodapé */
+    margin-left: 3vw; /* Alinhado com o QR code */
+    align-self: flex-start;
+    width: 100%;
+    max-width: 45vw;
+}
+
+/* Esconde o contador mobile no desktop */
+.mobile-countdown {
+    display: none;
+}
+
 .countdown-title {
-    font-size: clamp(1.5rem, 3vw, 3rem);
+    font-size: 2.5rem;
     font-weight: 800;
-    text-align: center;
-    margin-bottom: 2vh;
+    text-align: left;
+    margin-bottom: 1.5vh;
     text-transform: uppercase;
-    letter-spacing: clamp(2px, 0.5vw, 4px);
+    letter-spacing: 3px;
     animation: bounce 2s ease-in-out infinite;
     color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 @keyframes bounce {
@@ -321,11 +626,10 @@ body {
 
 .countdown {
     display: flex;
-    justify-content: center; /* Centralizado */
+    justify-content: flex-start;
     align-items: center;
-    gap: clamp(1vw, 2vw, 3vw);
-    flex-wrap: wrap;
-    max-width: 100%;
+    gap: 2vw;
+    flex-wrap: nowrap;
 }
 
 .time-block {
@@ -352,19 +656,19 @@ body {
 }
 
 .number-box {
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.8);
     color: white;
-    font-size: clamp(2rem, 4vw, 4rem);
+    font-size: 3rem;
     font-weight: 900;
-    width: clamp(80px, 12vw, 120px);
-    height: clamp(100px, 14vw, 140px);
+    width: 100px;
+    height: 110px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 16px;
-    margin-bottom: 1vh;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.5);
-    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 12px;
+    margin-bottom: 0.8vh;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.2);
     transition: all 0.3s ease;
     animation: numberPulse 1s ease-in-out infinite;
 }
@@ -386,21 +690,18 @@ body {
 }
 
 .label {
-    font-size: clamp(0.8rem, 1.4vw, 1.4rem);
+    font-size: 1.1rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: clamp(1px, 0.3vw, 2px);
+    letter-spacing: 1px;
     color: white;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 .separator {
-    font-size: clamp(2rem, 4vw, 4rem);
+    font-size: 2.5rem;
     font-weight: 900;
     margin-bottom: 2vh;
     animation: blink 1s ease-in-out infinite;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 @keyframes blink {
@@ -408,5 +709,1025 @@ body {
     51%, 100% { opacity: 0.3; }
 }
 
+/* Call to Action - Otimizado para totem */
+.cta-section {
+    margin-bottom: 2vh;
+    animation: fadeInUp 1s ease-out 2.4s both;
+}
 
-/* Responsividade otimizada com clamp() - removidas media queries antigas */
+.register-text {
+    font-size: 1.2rem;
+    margin-bottom: 1vh;
+    font-weight: 600;
+}
+
+.register-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 1vw;
+    background: white;
+    color: #FF6B00;
+    padding: 1.5vh 3vw;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    animation: buttonGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes buttonGlow {
+    from { 
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        transform: scale(1);
+    }
+    to { 
+        box-shadow: 0 12px 35px rgba(255,255,255,0.4);
+        transform: scale(1.05);
+    }
+}
+
+.register-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(255,255,255,0.3);
+}
+
+.globe-icon {
+    font-size: 1.8rem;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* QR Code Section - Otimizado para totem - removido, agora está acima */
+
+.qr-code {
+    width: 150px;
+    height: 150px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Sem animação - QR code fixo */
+}
+
+.qr-image {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.qr-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    max-width: 200px;
+    color: white;
+}
+
+/* Seção Direita - Otimizada para totem */
+.right-section {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    animation: slideInRight 1.2s ease-out 0.5s both;
+    width: 50vw;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.entrepreneur-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.glow-effect {
+    position: absolute;
+    width: 20vw;
+    height: 20vw;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: glowPulse 3s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes glowPulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% { 
+        transform: scale(1.2);
+        opacity: 0.6;
+    }
+}
+
+.entrepreneur-image {
+    position: relative;
+    z-index: 2;
+    /* Removido animação para ficar fixo como na segunda imagem */
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(1deg); }
+    50% { transform: translateY(-5px) rotate(0deg); }
+    75% { transform: translateY(-15px) rotate(-1deg); }
+}
+
+.entrepreneur-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+    margin-right: 0;
+    padding-right: 0;
+    /* Removido animação para ficar fixo como na segunda imagem */
+}
+
+@keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+}
+
+.tablet-icon {
+    position: absolute;
+    bottom: 2vh;
+    right: -2vw;
+    font-size: 2.5rem;
+    animation: tabletFloat 2s ease-in-out infinite;
+}
+
+@keyframes tabletFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+/* Footer Logo - dentro do footer-container */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 1.5vw;
+    color: white;
+}
+
+/* Footer Container no desktop */
+.footer-container {
+    position: absolute;
+    bottom: 3vh;
+    left: 3vw;
+    right: 3vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 4;
+    animation: fadeInUp 1s ease-out 2.7s both;
+}
+
+/* QR Code no desktop - dentro do rodapé */
+.qr-section {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.sebrae-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3vh;
+}
+
+.line {
+    height: 0.4vh;
+    background: white;
+    border-radius: 2px;
+    animation: lineGrow 2s ease-in-out infinite;
+}
+
+.line-1 { width: 4vw; animation-delay: 0s; }
+.line-2 { width: 3vw; animation-delay: 0.2s; }
+.line-3 { width: 2vw; animation-delay: 0.4s; }
+
+@keyframes lineGrow {
+    0%, 100% { width: 2vw; }
+    50% { width: 4vw; }
+}
+
+.sebrae-text {
+    font-size: 1.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Responsividade específica para totem 55" */
+@media (min-width: 1920px) and (min-height: 1080px) {
+    /* Tela de totem 55" - Full HD */
+    .content-wrapper {
+        padding: 5vh 0 8vh 4vw;
+        gap: 0;
+    }
+    
+    .event-logos {
+        margin-top: 0;
+        margin-bottom: 1vh;
+    }
+    
+    .event-logos-image {
+        max-height: 18vh;
+        object-position: center center; /* Centralizado */
+        display: block;
+        margin: 0 auto; /* Centralização adicional */
+    }
+    
+    .main-headline {
+        font-family: 'Nexa', sans-serif;
+        font-size: 4.5rem; /* Aumentado significativamente */
+        font-weight: 500;
+        margin-top: 5vh;
+        text-align: left;
+        align-self: flex-start;
+    }
+    
+    .event-description {
+        font-family: 'Nexa', sans-serif;
+        font-size: 2rem; /* Aumentado significativamente */
+        font-weight: 700;
+        margin-top: 3vh;
+        text-align: left;
+        align-self: flex-start;
+    }
+    
+    .date-numbers {
+        font-size: 5rem;
+    }
+    
+    .date-month {
+        font-size: 3rem;
+    }
+    
+    .countdown-title {
+        font-size: 3rem;
+        text-align: left;
+    }
+    
+    .number-box {
+        width: 120px;
+        height: 130px;
+        font-size: 3.5rem;
+    }
+    
+    .label {
+        font-size: 1.3rem;
+        color: white;
+    }
+    
+    .separator {
+        font-size: 3rem;
+    }
+    
+    .register-button {
+        font-size: 1.6rem;
+        padding: 2vh 4vw;
+    }
+    
+    .right-section {
+        width: 55vw;
+    }
+    
+    .entrepreneur-container {
+        width: 100%;
+        height: 85vh;
+    }
+    
+    .tablet-icon {
+        font-size: 3rem;
+    }
+    
+    .qr-code {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .qr-image {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .qr-text {
+        font-size: 1.4rem;
+        max-width: 250px;
+    }
+}
+
+/* Ajustes para telas desktop médias */
+@media (min-width: 1367px) and (max-width: 1919px) {
+    .date-numbers {
+        font-size: 4rem;
+    }
+    
+    .date-month {
+        font-size: 2.5rem;
+    }
+    
+    .qr-code {
+        width: 130px;
+        height: 130px;
+    }
+    
+    .qr-image {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .qr-text {
+        font-size: 1.2rem;
+        max-width: 220px;
+    }
+}
+
+/* Ajustes para telas menores (caso necessário) */
+@media (max-width: 1366px) {
+    .content-wrapper {
+        padding: 3vh 0 3vh 2vw;
+        gap: 0;
+    }
+    
+    .event-logos-image {
+        max-height: 12vh;
+        object-position: center center; /* Centralizado */
+        display: block;
+        margin: 0 auto; /* Centralização adicional */
+    }
+    
+    .main-headline {
+        font-family: 'Nexa', sans-serif;
+        font-size: 3rem; /* Aumentado significativamente */
+        font-weight: 500;
+    }
+    
+    .event-description {
+        font-family: 'Nexa', sans-serif;
+        font-size: 1.5rem; /* Aumentado significativamente */
+        font-weight: 700;
+    }
+    
+    .date-numbers {
+        font-size: 2.8rem;
+    }
+    
+    .date-month {
+        font-size: 1.6rem;
+    }
+    
+    .event-location, .event-time {
+        padding: 0.6vh 1.2vw;
+        font-size: 0.9rem;
+        display: block;
+        width: 100%;
+    }
+    
+    .number-box {
+        width: 80px;
+        height: 90px;
+        font-size: 2.5rem;
+    }
+    
+    .right-section {
+        width: 40vw;
+    }
+    
+    .entrepreneur-container {
+        width: 100%;
+        height: 70vh;
+    }
+}
+
+/* Responsividade para Mobile - Baseado nas dimensões 3626x5079 */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto; /* Permitir scroll no mobile */
+    }
+    
+    .poster-container {
+        min-height: 100vh;
+        height: auto;
+        position: relative;
+        aspect-ratio: 3626/5079; /* Proporção correta */
+        overflow: visible !important;
+    }
+    
+    .content-wrapper {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+        padding: 0; /* Removido padding para colar nas bordas */
+        gap: 0;
+        align-items: stretch; /* Estica para ocupar toda a altura */
+        justify-content: space-between;
+    }
+    
+    .left-section {
+        flex: 1;
+        color: white;
+        max-width: 100vw; /* Máximo espaço horizontal */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start; /* Alinha à esquerda para maximizar espaço */
+        height: 100%;
+        padding: 5vh 0 2.5vh 1vw; /* Padding reduzido para maximizar espaço */
+        z-index: 3;
+    }
+    
+    
+    /* Logotipo no topo para mobile */
+    .top-logo {
+        top: 0.5vh; /* Próximo ao topo no mobile */
+        left: 1vw; /* Alinhado à esquerda no mobile */
+        max-width: 70vw; /* Largura ajustada para mobile */
+    }
+    
+    .logo-image {
+        max-height: 12vh; /* Ajustado para mobile */
+    }
+    
+    .main-headline {
+        font-family: 'Nexa', sans-serif;
+        font-size: 1.5rem; /* Reduzido mais para mobile */
+        font-weight: 500;
+        line-height: 1.2;
+        margin-top: -4vh; /* Subido 2x mais no mobile - sobreposição muito maior */
+        margin-bottom: 1.5vh;
+        margin-left: 3vw; /* Alinhado com o QR code */
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        letter-spacing: 0.5px;
+        text-align: left;
+        align-self: flex-start;
+        max-width: 88vw; /* Ajustado para quebra mais profissional */
+    }
+    
+    .event-description {
+        font-family: 'Nexa', sans-serif;
+        font-size: 0.9rem; /* Reduzido mais para mobile e quebra correta */
+        font-weight: 700;
+        line-height: 1.3;
+        margin-top: -9vh; /* Descido/afastado mais do topo no mobile - sobreposição menor no título */
+        margin-bottom: 1vh; /* Reduzido para subir mais */
+        margin-left: 3vw; /* Alinhado com o QR code */
+        max-width: 50vw; /* Reduzido bastante para quebra mais frequente no mobile */
+        letter-spacing: 0.3px;
+        text-align: left;
+        align-self: flex-start;
+        /* Efeito de vidro premium para notificação mobile */
+        background: rgba(255, 255, 255, 0.08);
+        padding: 1.5vh 2vw;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 
+            0 6px 24px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 15px rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+        /* Inicialmente oculto - só aparece com notificação */
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+        transition: all 0.8s ease;
+        pointer-events: none;
+    }
+    
+    .event-info {
+        margin-bottom: 18vh; /* Afastado mais do rodapé no mobile */
+        text-align: left; /* Alinhado à esquerda */
+        margin-top: -1vh; /* Subido 3x mais no mobile - sobreposição no contador */
+        margin-left: 3vw; /* Alinhado com o QR code */
+        align-self: flex-start; /* Alinhado à esquerda */
+        width: 100%;
+    }
+    
+    .date-numbers {
+        font-family: 'Nexa', sans-serif;
+        font-size: 2.2rem; /* Reduzido para layout mais equilibrado no mobile */
+        font-weight: 900;
+        color: #FFD700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        letter-spacing: 2px;
+        line-height: 0.9;
+        display: block;
+    }
+    
+    .date-month {
+        font-family: 'Nexa', sans-serif;
+        font-size: 1.4rem; /* Reduzido para layout mais equilibrado no mobile */
+        font-weight: 700;
+        color: #FFD700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        letter-spacing: 1px;
+        line-height: 0.9;
+        display: block;
+        margin-top: -0.5vh;
+    }
+    
+    .event-location, .event-time {
+        font-family: 'Nexa', sans-serif;
+        font-size: 0.9rem; /* Reduzido para cards menores */
+        font-weight: 600;
+        margin-bottom: 0.8vh;
+        color: white;
+        letter-spacing: 0.5px;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 0.6vh 1.2vw; /* Reduzido para cards menores */
+        border-radius: 8px; /* Reduzido para cards menores */
+        box-shadow: 
+            0 4px 15px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        display: block;
+        max-width: 60%; /* Reduzido para cards menores */
+        width: fit-content; /* Ajusta ao conteúdo */
+        margin-left: 0; /* Alinhado à esquerda */
+        margin-right: auto;
+        text-align: left; /* Alinhado à esquerda */
+    }
+    
+    /* Esconde o QR code da seção esquerda no mobile */
+    .left-section .qr-section {
+        display: none;
+    }
+    
+    /* Container do rodapé para mobile */
+    .footer-container {
+        position: absolute !important;
+        bottom: 1vh !important; /* Movido para mais baixo */
+        left: 3vw !important;
+        right: 3vw !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        z-index: 10 !important;
+        width: calc(100% - 6vw) !important;
+        background: transparent !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        min-height: 60px !important;
+        flex-wrap: nowrap !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translateZ(0) !important;
+        will-change: transform !important;
+        contain: layout !important;
+        isolation: isolate !important;
+        backface-visibility: hidden !important;
+        -webkit-transform: translateZ(0) !important;
+        -moz-transform: translateZ(0) !important;
+        -ms-transform: translateZ(0) !important;
+        -o-transform: translateZ(0) !important;
+        -webkit-backface-visibility: hidden !important;
+        -moz-backface-visibility: hidden !important;
+        -ms-backface-visibility: hidden !important;
+        -o-backface-visibility: hidden !important;
+    }
+    
+    .qr-section {
+        display: flex;
+        align-items: center;
+        gap: 1.5vw;
+    }
+    
+    /* Garante que os elementos dentro do container funcionem */
+    .footer-container .qr-section {
+        display: flex !important;
+        align-items: center !important;
+        gap: 1.5vw !important;
+        position: static !important;
+        flex-shrink: 0 !important;
+        max-width: 50% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translateZ(0) !important;
+        will-change: transform !important;
+        contain: layout !important;
+        isolation: isolate !important;
+        backface-visibility: hidden !important;
+        -webkit-transform: translateZ(0) !important;
+        -moz-transform: translateZ(0) !important;
+        -ms-transform: translateZ(0) !important;
+        -o-transform: translateZ(0) !important;
+    }
+    
+    .footer-container .footer-logo {
+        display: flex !important;
+        align-items: center !important;
+        gap: 1.5vw !important;
+        color: white !important;
+        position: static !important;
+        flex-shrink: 0 !important;
+        max-width: 50% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translateZ(0) !important;
+        will-change: transform !important;
+        contain: layout !important;
+        isolation: isolate !important;
+        backface-visibility: hidden !important;
+        -webkit-transform: translateZ(0) !important;
+        -moz-transform: translateZ(0) !important;
+        -ms-transform: translateZ(0) !important;
+        -o-transform: translateZ(0) !important;
+    }
+    
+    .qr-code {
+        width: 90px; /* Aumentado para melhor visibilidade */
+        height: 90px;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    
+    .qr-image {
+        width: 80px; /* Aumentado para melhor visibilidade */
+        height: 80px;
+        object-fit: contain;
+        border-radius: 6px;
+    }
+    
+    .qr-text {
+        font-size: 1.3rem; /* Aumentado para melhor legibilidade no mobile */
+        font-weight: 600;
+        max-width: 180px;
+        line-height: 1.4;
+        color: white;
+        text-align: center;
+    }
+    
+    /* Esconde o contador original no mobile */
+    .countdown-center {
+        display: none;
+    }
+    
+    /* Contador à esquerda no mobile */
+    .countdown-left {
+        display: none;
+    }
+    
+    /* Contador regressivo para mobile - posicionado abaixo do texto descritivo */
+    .mobile-countdown {
+        display: block !important;
+        position: static;
+        z-index: 10;
+        text-align: left;
+        width: 100%;
+        max-width: 88vw; /* Ajustado para quebra mais profissional */
+        margin-top: -8vh; /* Subido 4x mais no mobile - sobreposição extrema no texto */
+        margin-bottom: -8vh; /* Descido bem mais no mobile - sobreposição no rodapé */
+        margin-left: 3vw; /* Alinhado com o QR code */
+        align-self: flex-start;
+    }
+    
+    .countdown-title {
+        font-size: 1.3rem; /* Ajustado para proporção correta */
+        font-weight: 800;
+        text-align: left;
+        margin-bottom: 0.6vh;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .countdown {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1vw; /* Ajustado para proporção correta */
+        flex-wrap: nowrap;
+    }
+    
+    .number-box {
+        background: rgba(0,0,0,0.8);
+        color: white;
+        font-size: 1.8rem; /* Aumentado para melhor legibilidade */
+        font-weight: 900;
+        width: 60px; /* Aumentado para melhor proporção */
+        height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        margin-bottom: 0.5vh;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        border: 2px solid rgba(255,255,255,0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .label {
+        font-size: 0.7rem; /* Aumentado para melhor legibilidade */
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: white;
+    }
+    
+    .separator {
+        font-size: 1.5rem; /* Aumentado para melhor visibilidade */
+        font-weight: 900;
+        margin-bottom: 1vh;
+    }
+    
+    
+    
+    .sebrae-text {
+        font-size: 1.8rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
+    .line-1 { width: 4vw; }
+    .line-2 { width: 3vw; }
+    .line-3 { width: 2vw; }
+}
+
+/* Ajustes para mobile pequeno */
+@media (max-width: 480px) {
+    .poster-container {
+        overflow: visible !important;
+    }
+    
+    .content-wrapper {
+        padding: 0; /* Removido padding para colar nas bordas */
+    }
+    
+    .left-section {
+        padding: 14vh 0 6vh 1vw; /* Padding reduzido para maximizar espaço */
+        align-items: flex-start; /* Alinha à esquerda para maximizar espaço */
+        justify-content: space-between;
+    }
+    
+    /* Logotipo no topo para mobile pequeno */
+    .top-logo {
+        top: 0.3vh; /* Muito próximo ao topo no mobile pequeno */
+        left: 1vw; /* Alinhado à esquerda no mobile pequeno */
+        max-width: 80vw; /* Largura ajustada para mobile pequeno */
+    }
+    
+    .logo-image {
+        max-height: 10vh; /* Ajustado para mobile pequeno */
+    }
+    
+    /* Esconde o contador original no mobile pequeno */
+    .countdown-center {
+        display: none;
+    }
+    
+    /* Contador regressivo para mobile pequeno - posicionado abaixo do texto descritivo */
+    .mobile-countdown {
+        display: block !important;
+        position: static;
+        z-index: 10;
+        text-align: left;
+        width: 100%;
+        max-width: 88vw; /* Ajustado para quebra mais profissional */
+        margin-top: -8vh; /* Subido 4x mais no mobile pequeno - sobreposição extrema no texto */
+        margin-bottom: -8vh; /* Descido bem mais no mobile pequeno - sobreposição no rodapé */
+        margin-left: 3vw; /* Alinhado com o QR code */
+        align-self: flex-start;
+    }
+    
+    /* Esconde o QR code da seção esquerda no mobile pequeno também */
+    .left-section .qr-section {
+        display: none;
+    }
+    
+    /* Esconde o footer-logo original no mobile pequeno */
+    .footer-logo {
+        display: none !important;
+    }
+    
+    /* Container do rodapé para mobile pequeno */
+    .footer-container {
+        position: absolute !important;
+        bottom: 1vh !important; /* Movido para mais baixo */
+        left: 3vw !important;
+        right: 3vw !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        z-index: 10 !important;
+        width: calc(100% - 6vw) !important;
+        background: transparent !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        min-height: 60px !important;
+        flex-wrap: nowrap !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translateZ(0) !important;
+        will-change: transform !important;
+        contain: layout !important;
+        isolation: isolate !important;
+        backface-visibility: hidden !important;
+        -webkit-transform: translateZ(0) !important;
+        -moz-transform: translateZ(0) !important;
+        -ms-transform: translateZ(0) !important;
+        -o-transform: translateZ(0) !important;
+        -webkit-backface-visibility: hidden !important;
+        -moz-backface-visibility: hidden !important;
+        -ms-backface-visibility: hidden !important;
+        -o-backface-visibility: hidden !important;
+    }
+    
+    /* Garante que os elementos dentro do container funcionem no mobile pequeno */
+    .footer-container .qr-section {
+        display: flex !important;
+        align-items: center !important;
+        gap: 1.5vw !important;
+        position: static !important;
+        flex-shrink: 0 !important;
+        max-width: 50% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translateZ(0) !important;
+        will-change: transform !important;
+        contain: layout !important;
+        isolation: isolate !important;
+        backface-visibility: hidden !important;
+        -webkit-transform: translateZ(0) !important;
+        -moz-transform: translateZ(0) !important;
+        -ms-transform: translateZ(0) !important;
+        -o-transform: translateZ(0) !important;
+    }
+    
+    .footer-container .footer-logo {
+        display: flex !important;
+        align-items: center !important;
+        gap: 1.5vw !important;
+        color: white !important;
+        position: static !important;
+        flex-shrink: 0 !important;
+        max-width: 50% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translateZ(0) !important;
+        will-change: transform !important;
+        contain: layout !important;
+        isolation: isolate !important;
+        backface-visibility: hidden !important;
+        -webkit-transform: translateZ(0) !important;
+        -moz-transform: translateZ(0) !important;
+        -ms-transform: translateZ(0) !important;
+        -o-transform: translateZ(0) !important;
+    }
+    
+    .main-headline {
+        font-size: 1.6rem; /* Reduzido mais para mobile pequeno */
+        line-height: 1.2;
+        margin-top: -5vh; /* Subido 2x mais no mobile pequeno - sobreposição muito maior */
+        margin-bottom: 1vh;
+        margin-left: 3vw; /* Alinhado com o QR code */
+        text-align: left;
+        max-width: 88vw; /* Ajustado para quebra mais profissional */
+    }
+    
+    .event-description {
+        font-size: 0.8rem; /* Reduzido mais para mobile pequeno e quebra correta */
+        line-height: 1.2;
+        margin-top: -9vh; /* Descido/afastado mais do topo no mobile pequeno - sobreposição menor no título */
+        margin-bottom: 0.5vh; /* Reduzido para subir mais */
+        margin-left: 3vw; /* Alinhado com o QR code */
+        text-align: left;
+        max-width: 60vw; /* Reduzido bastante para quebra mais frequente no mobile pequeno */
+        /* Efeito de vidro premium para notificação mobile pequeno */
+        background: rgba(255, 255, 255, 0.08);
+        padding: 1.2vh 1.5vw;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 
+            0 4px 20px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3),
+            0 0 12px rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+        /* Inicialmente oculto - só aparece com notificação */
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+        transition: all 0.8s ease;
+        pointer-events: none;
+    }
+    
+    @media screen and (max-width: 768px) {
+        .event-info {
+            margin-bottom: 18vh; /* Afastado mais do rodapé no mobile */
+            text-align: left; /* Alinhado à esquerda */
+            margin-top: -1vh; /* Subido 3x mais no mobile - sobreposição no contador */
+            margin-left: 3vw; /* Alinhado com o QR code */
+            align-self: flex-start; /* Alinhado à esquerda */
+            width: 100%;
+            position: relative; /* Para controlar z-index */
+            z-index: 15; /* Maior que o texto descritivo */
+        }
+    }
+    
+    
+    .date-numbers {
+        font-size: 1.8rem; /* Reduzido para layout mais equilibrado no mobile pequeno */
+    }
+    
+    .date-month {
+        font-size: 1.2rem; /* Reduzido para layout mais equilibrado no mobile pequeno */
+    }
+    
+    .countdown-title {
+        font-size: 1.2rem;
+        text-align: left;
+    }
+    
+    .number-box {
+        width: 55px;
+        height: 65px;
+        font-size: 1.6rem;
+    }
+    
+    .label {
+        font-size: 0.7rem;
+    }
+    
+    .separator {
+        font-size: 1.4rem;
+    }
+    
+    
+    .event-location, .event-time {
+        font-size: 0.8rem; /* Reduzido para mobile pequeno */
+        padding: 0.5vh 1vw; /* Reduzido para mobile pequeno */
+        margin-bottom: 0.6vh;
+        display: block; /* Um abaixo do outro */
+        width: fit-content; /* Ajusta ao conteúdo */
+        text-align: left; /* Alinhado à esquerda */
+        max-width: 60%; /* Reduzido para mobile pequeno */
+        margin-left: 0; /* Alinhado à esquerda */
+        margin-right: auto;
+    }
+    
+    .qr-code {
+        width: 80px;
+        height: 80px;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .qr-image {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .qr-text {
+        font-size: 1.1rem; /* Aumentado para melhor legibilidade no mobile pequeno */
+        max-width: 150px;
+        color: white;
+        text-align: center;
+    }
+}
