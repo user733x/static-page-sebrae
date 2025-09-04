@@ -292,24 +292,7 @@ body {
     animation: fadeInUp 1s ease-out 0.5s both;
 }
 
-/* Contador Regressivo à Esquerda */
-.countdown-left {
-    position: static;
-    z-index: 10;
-    text-align: left;
-    animation: fadeInUp 1s ease-out 1.5s both;
-    margin-top: -8vh;
-    margin-bottom: -5vh;
-    margin-left: 3vw;
-    align-self: flex-start;
-    width: 100%;
-    max-width: 45vw;
-}
-
-/* Esconde o contador mobile no desktop */
-.mobile-countdown {
-    display: none;
-}
+/* Classes removidas - não existem no HTML */
 
 @keyframes fadeInUp {
     from {
@@ -470,28 +453,20 @@ body {
 
 /* Responsividade para Mobile */
 @media (max-width: 768px) {
-    /* Esconde o contador original no mobile */
-    .countdown-center {
-        display: none;
-    }
-    
-    /* Contador à esquerda no mobile */
-    .countdown-left {
-        display: none;
-    }
-    
-    /* Contador regressivo para mobile - posicionado abaixo do texto descritivo */
-    .mobile-countdown {
-        display: block !important;
+    /* Ajusta o contador para mobile */
+    .countdown-container {
         position: static;
-        z-index: 10;
+        transform: none;
         text-align: left;
-        width: 100%;
-        max-width: 88vw;
         margin-top: -8vh;
         margin-bottom: -8vh;
         margin-left: 3vw;
-        align-self: flex-start;
+        width: 100%;
+        max-width: 88vw;
+    }
+    
+    .countdown-center {
+        display: block;
     }
     
     .countdown-title {
@@ -547,23 +522,20 @@ body {
 
 /* Ajustes para mobile pequeno */
 @media (max-width: 480px) {
-    /* Esconde o contador original no mobile pequeno */
-    .countdown-center {
-        display: none;
-    }
-    
-    /* Contador regressivo para mobile pequeno - posicionado abaixo do texto descritivo */
-    .mobile-countdown {
-        display: block !important;
+    /* Ajusta o contador para mobile pequeno */
+    .countdown-container {
         position: static;
-        z-index: 10;
+        transform: none;
         text-align: left;
-        width: 100%;
-        max-width: 88vw;
         margin-top: -8vh;
         margin-bottom: -8vh;
         margin-left: 3vw;
-        align-self: flex-start;
+        width: 100%;
+        max-width: 88vw;
+    }
+    
+    .countdown-center {
+        display: block;
     }
     
     .countdown-title {
