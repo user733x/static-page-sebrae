@@ -456,7 +456,7 @@ body {
     /* Ajusta o contador para mobile - no meio da página, alinhado à direita */
     .countdown-container {
         position: absolute;
-        bottom: 45vh;
+        bottom: 50vh;
         right: 3vw;
         left: auto;
         top: auto;
@@ -480,6 +480,16 @@ body {
         letter-spacing: 1px;
         color: white;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        /* Efeito de vidro com transparência */
+        background: rgba(255, 255, 255, 0.1) !important;
+        padding: 0.8vh 1.5vw !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        backdrop-filter: blur(15px) !important;
+        display: inline-block !important;
     }
     
     .countdown {
@@ -509,10 +519,21 @@ body {
     
     .label {
         font-size: 0.6rem;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         color: white;
+        /* Retângulo pequeno com efeito de vidro */
+        background: rgba(0, 0, 0, 0.4) !important;
+        padding: 0.3vh 0.8vw !important;
+        border-radius: 6px !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 
+            0 4px 15px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(10px) !important;
+        display: inline-block !important;
+        margin-top: 0.2vh !important;
     }
     
     .separator {
@@ -527,7 +548,7 @@ body {
     /* Ajusta o contador para mobile pequeno - ainda menor */
     .countdown-container {
         position: absolute;
-        bottom: 40vh;
+        bottom: 45vh;
         right: 2vw;
         left: auto;
         top: auto;
@@ -546,6 +567,16 @@ body {
         font-size: 0.9rem;
         text-align: right;
         margin-bottom: 0.4vh;
+        /* Efeito de vidro com transparência */
+        background: rgba(255, 255, 255, 0.1) !important;
+        padding: 0.6vh 1.2vw !important;
+        border-radius: 10px !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 
+            0 6px 25px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        backdrop-filter: blur(12px) !important;
+        display: inline-block !important;
     }
     
     .number-box {
@@ -556,6 +587,18 @@ body {
     
     .label {
         font-size: 0.5rem;
+        font-weight: 700;
+        /* Retângulo pequeno com efeito de vidro */
+        background: rgba(0, 0, 0, 0.4) !important;
+        padding: 0.2vh 0.6vw !important;
+        border-radius: 5px !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 
+            0 3px 12px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(8px) !important;
+        display: inline-block !important;
+        margin-top: 0.1vh !important;
     }
     
     .separator {
