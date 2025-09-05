@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Data do evento: 08 de outubro de 2025
-    const eventDate = new Date('2025-10-08T14:00:00'); // 14h do dia 08/10/2025
+    // Data do evento: 08 de outubro de 2025 às 14h (horário local do Brasil)
+    const eventDate = new Date('2025-10-08T14:00:00-03:00'); // 14h do dia 08/10/2025 (Brasil)
     
     // Otimização do carregamento da imagem de background
     function preloadBackgroundImage() {
@@ -55,11 +55,14 @@ document.addEventListener('DOMContentLoaded', function() {
             updateNumberWithAnimation('minutes', minutes.toString().padStart(2, '0'));
             updateNumberWithAnimation('seconds', seconds.toString().padStart(2, '0'));
         } else {
-            // Evento já passou
+            // Evento já passou - zera o contador
             updateNumberWithAnimation('days', '00');
             updateNumberWithAnimation('hours', '00');
             updateNumberWithAnimation('minutes', '00');
             updateNumberWithAnimation('seconds', '00');
+            
+            // Para o intervalo quando o evento terminar
+            clearInterval(countdownInterval);
         }
     }
     
