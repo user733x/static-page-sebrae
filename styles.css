@@ -29,7 +29,7 @@ body {
     left: -2vw;
     right: -2vw;
     bottom: 0;
-    background: url('asset/images/background2.png') no-repeat center center;
+    background: url('asset/images/backgroundx.png') no-repeat center center;
     background-size: 95%;
     background-attachment: fixed;
     z-index: 1;
@@ -42,6 +42,41 @@ body {
 }
 
 /* Placeholder para a imagem de background - removido para não sobrepor a imagem */
+
+/* Container do logotipo centralizado */
+.logo-container {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-image {
+    max-width: 80%;
+    max-height: 200px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    animation: logoFadeIn 1s ease-out 0.2s both;
+}
+
+@keyframes logoFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 /* Efeito de reflexo iluminado sutil */
 .pulse-overlay {
@@ -389,16 +424,16 @@ body {
 .number-box {
     background: rgba(0,0,0,0.8);
     color: white;
-    font-size: 5.4rem;
+    font-size: 4.86rem;
     font-weight: 900;
-    width: 168px;
-    height: 192px;
+    width: 151px;
+    height: 173px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 18px;
-    margin-bottom: 1.2vh;
-    box-shadow: 0 14px 42px rgba(0,0,0,0.4);
+    border-radius: 16px;
+    margin-bottom: 1.08vh;
+    box-shadow: 0 12.6px 38px rgba(0,0,0,0.4);
     border: 3px solid rgba(255,255,255,0.3);
     transition: all 0.3s ease;
     animation: numberPulse 1s ease-in-out infinite;
@@ -421,28 +456,28 @@ body {
 }
 
 .label {
-    font-size: 1.68rem;
+    font-size: 1.51rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 2.4px;
+    letter-spacing: 2.16px;
     color: white;
     /* Retângulo com efeito de vidro */
     background: rgba(0, 0, 0, 0.4);
-    padding: 0.6vh 1.44vw;
-    border-radius: 9.6px;
+    padding: 0.54vh 1.3vw;
+    border-radius: 8.6px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 
-        0 7.2px 24px rgba(0, 0, 0, 0.3),
+        0 6.5px 22px rgba(0, 0, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     display: inline-block;
-    margin-top: 0.6vh;
+    margin-top: 0.54vh;
 }
 
 .separator {
-    font-size: 4.8rem;
+    font-size: 4.32rem;
     font-weight: 900;
-    margin-bottom: 2.4vh;
+    margin-bottom: 2.16vh;
     animation: blink 1s ease-in-out infinite;
 }
 
@@ -454,6 +489,11 @@ body {
 
 /* Responsividade para telas grandes */
 @media (min-width: 1920px) {
+    .logo-image {
+        max-width: 70%;
+        max-height: 250px;
+    }
+    
     .countdown-title {
         font-size: 5rem;
         padding: 2vh 4vw;
@@ -461,24 +501,29 @@ body {
     }
     
     .number-box {
-        width: 216px;
-        height: 240px;
-        font-size: 7.2rem;
+        width: 194px;
+        height: 216px;
+        font-size: 6.48rem;
     }
     
     .label {
-        font-size: 2.4rem;
-        padding: 0.96vh 1.8vw;
-        border-radius: 12px;
+        font-size: 2.16rem;
+        padding: 0.86vh 1.62vw;
+        border-radius: 10.8px;
     }
     
     .separator {
-        font-size: 7.2rem;
+        font-size: 6.48rem;
     }
 }
 
 /* Responsividade para telas médias */
 @media (max-width: 1366px) {
+    .logo-image {
+        max-width: 85%;
+        max-height: 180px;
+    }
+    
     .countdown-title {
         font-size: 3rem;
         padding: 1.2vh 2.5vw;
@@ -486,24 +531,33 @@ body {
     }
     
     .number-box {
-        width: 144px;
-        height: 168px;
-        font-size: 4.8rem;
+        width: 130px;
+        height: 151px;
+        font-size: 4.32rem;
     }
     
     .label {
-        font-size: 1.56rem;
-        padding: 0.48vh 1.2vw;
-        border-radius: 7.2px;
+        font-size: 1.4rem;
+        padding: 0.43vh 1.08vw;
+        border-radius: 6.5px;
     }
     
     .separator {
-        font-size: 4.8rem;
+        font-size: 4.32rem;
     }
 }
 
 /* Responsividade para Mobile */
 @media (max-width: 768px) {
+    .logo-container {
+        top: 6%;
+    }
+    
+    .logo-image {
+        max-width: 90%;
+        max-height: 120px;
+    }
+    
     /* Ajusta o contador para mobile - centralizado */
     .countdown-container {
         position: absolute;
@@ -556,48 +610,57 @@ body {
     .number-box {
         background: rgba(0,0,0,0.8);
         color: white;
-        font-size: 2.4rem;
+        font-size: 2.16rem;
         font-weight: 900;
-        width: 72px;
-        height: 84px;
+        width: 65px;
+        height: 76px;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 12px;
-        margin-bottom: 0.6vh;
-        box-shadow: 0 7.2px 24px rgba(0,0,0,0.4);
+        border-radius: 10.8px;
+        margin-bottom: 0.54vh;
+        box-shadow: 0 6.5px 22px rgba(0,0,0,0.4);
         border: 2px solid rgba(255,255,255,0.3);
         transition: all 0.3s ease;
     }
     
     .label {
-        font-size: 0.96rem;
+        font-size: 0.86rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 1.2px;
+        letter-spacing: 1.08px;
         color: white;
         /* Retângulo pequeno com efeito de vidro */
         background: rgba(0, 0, 0, 0.4) !important;
-        padding: 0.48vh 1.2vw !important;
-        border-radius: 9.6px !important;
+        padding: 0.43vh 1.08vw !important;
+        border-radius: 8.6px !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
         box-shadow: 
-            0 4.8px 18px rgba(0, 0, 0, 0.3),
+            0 4.3px 16px rgba(0, 0, 0, 0.3),
             inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
         backdrop-filter: blur(10px) !important;
         display: inline-block !important;
-        margin-top: 0.36vh !important;
+        margin-top: 0.32vh !important;
     }
     
     .separator {
-        font-size: 2.4rem;
+        font-size: 2.16rem;
         font-weight: 900;
-        margin-bottom: 1.2vh;
+        margin-bottom: 1.08vh;
     }
 }
 
 /* Ajustes para mobile pequeno */
 @media (max-width: 480px) {
+    .logo-container {
+        top: 4%;
+    }
+    
+    .logo-image {
+        max-width: 95%;
+        max-height: 100px;
+    }
+    
     /* Ajusta o contador para mobile pequeno - centralizado */
     .countdown-container {
         position: absolute;
@@ -635,29 +698,29 @@ body {
     }
     
     .number-box {
-        width: 60px;
-        height: 72px;
-        font-size: 1.8rem;
+        width: 54px;
+        height: 65px;
+        font-size: 1.62rem;
     }
     
     .label {
-        font-size: 0.72rem;
+        font-size: 0.65rem;
         font-weight: 700;
         /* Retângulo pequeno com efeito de vidro */
         background: rgba(0, 0, 0, 0.4) !important;
-        padding: 0.36vh 0.96vw !important;
-        border-radius: 7.2px !important;
+        padding: 0.32vh 0.86vw !important;
+        border-radius: 6.5px !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
         box-shadow: 
-            0 3.6px 14.4px rgba(0, 0, 0, 0.3),
+            0 3.2px 13px rgba(0, 0, 0, 0.3),
             inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
         backdrop-filter: blur(8px) !important;
         display: inline-block !important;
-        margin-top: 0.24vh !important;
+        margin-top: 0.22vh !important;
     }
     
     .separator {
-        font-size: 1.8rem;
+        font-size: 1.62rem;
     }
     
     .countdown {
