@@ -46,7 +46,7 @@ body {
 /* Container do logotipo centralizado */
 .logo-container {
     position: absolute;
-    top: 8%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;
