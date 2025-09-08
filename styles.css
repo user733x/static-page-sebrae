@@ -46,7 +46,7 @@ body {
 /* Container do logotipo centralizado */
 .logo-container {
     position: absolute;
-    top: 15%;
+    top: 8%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;
@@ -550,7 +550,7 @@ body {
 /* Responsividade para Mobile */
 @media (max-width: 768px) {
     .logo-container {
-        top: 12%;
+        top: 6%;
     }
     
     .logo-image {
@@ -653,7 +653,7 @@ body {
 /* Ajustes para mobile pequeno */
 @media (max-width: 480px) {
     .logo-container {
-        top: 10%;
+        top: 4%;
     }
     
     .logo-image {
